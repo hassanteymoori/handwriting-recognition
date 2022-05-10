@@ -1,3 +1,6 @@
 .DS_Store
 /raw_data
 /dataset
+/__pycache__
+/.idea
+/modules/__pycache__
