@@ -86,5 +86,39 @@ class Preprocessing:
     """
     A class to apply some image processing processes to the handwritings
     """
-    def __init__(self, path=):
-        pass
+    def __init__(self, path=config.path.get('paragraphs_edged')):
+        """
+        initialize the class
+
+        :param path: the location in which the processed paragraph will be stored
+        """
+        if not os.path.exists(path):
+            os.makedirs(path)
+        self.path = path
+        self.image = None
+
+    def blurring(self, kernel=(5,5) , sigma=0):
+        self._handleException()
+        self.image = cv2.GaussianBlur(self.image, kernel, sigma)
+        return self
+
+    def RGB_to_GrayScale(self):
+        self._handleException()
+        self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
+        return self
+
+    def load_image(self, img_path):
+        self.image = cv2.imread(img_path)
+        return self
+
+    def thresholding(self, MinThreshold=30, MaxThreshold=50):
+        self._handleException()
+        self.image = cv2.Canny(self.image, MinThreshold, MaxThreshold)
+        return self
+
+    def save(self, filename):
+        cv2.imwrite(os.path.join(self.path, filename), self.image)
+        return True
+    def _handleException(self):
+        if self.image == None:
+            raise Exception('First you need to load the image: call `load_image` method first')

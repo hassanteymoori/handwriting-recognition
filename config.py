@@ -10,7 +10,7 @@ path = {
     'xml'               : os.path.join(root, 'raw_data' , 'xml'),
     'ascii'             : os.path.join(root, 'raw_data' , 'ascii'),
     'paragraphs'        : os.path.join(root, 'preprocessed_data', 'paragraphs'),
-    'paragraphs-edged'  : os.path.join(root, 'preprocessed_data', 'paragraphs-edged')
+    'paragraphs_edged'  : os.path.join(root, 'preprocessed_data', 'paragraphs_edged')
 }
 
 
