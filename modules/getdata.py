@@ -7,7 +7,7 @@ import config
 class Downloader:
     """ A class used to retrieve the raw data from google drive """
 
-    def __init__(self, path=config.path['raw_data']):
+    def __init__(self, path=config.path.get('raw_data')):
         """
         initialize the class
 

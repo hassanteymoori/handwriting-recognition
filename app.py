@@ -1,8 +1,7 @@
 import os
 import config
 import modules.getdata as getdata
-import cv2
-
+from modules.preprocessing import ParagraphExtractor
 ########################## Step 1 of the pipeline  #################################
 '''
     To get the data from the google drive. The data includes the information
@@ -17,6 +16,11 @@ import cv2
 
 ########################## Step 1 of the pipeline  #################################
 '''
-
+    To extract the handwritten part from the form.
 '''
-# img = cv2.imread()
+
+preprocessor = ParagraphExtractor()
+preprocessor.extractParagraph(
+    os.path.join(config.path.get('forms'), 'a01-000u.png'),
+    os.path.join(config.path.get('xml'), 'a01-000u.xml'),
+)
