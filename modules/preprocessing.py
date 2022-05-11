@@ -97,6 +97,14 @@ class Preprocessing:
         self.path = path
         self.image = None
 
+    def apply_to_directory(self, paragraph_dir):
+        for filename in tqdm(os.listdir(paragraph_dir)):
+            if not filename.startswith('.'):
+                self.load_image(
+                    os.path.join(paragraph_dir, filename)
+                ).RGB_to_GrayScale().blurring().thresholding().save(filename)
+        return
+
     def blurring(self, kernel=(5,5) , sigma=0):
         self._handleException()
         self.image = cv2.GaussianBlur(self.image, kernel, sigma)
@@ -119,6 +127,7 @@ class Preprocessing:
     def save(self, filename):
         cv2.imwrite(os.path.join(self.path, filename), self.image)
         return True
+
     def _handleException(self):
-        if self.image == None:
+        if self.image is None:
             raise Exception('First you need to load the image: call `load_image` method first')
