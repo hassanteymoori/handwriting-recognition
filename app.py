@@ -19,8 +19,13 @@ from modules.preprocessing import ParagraphExtractor
     To extract the handwritten part from the form.
 '''
 
-preprocessor = ParagraphExtractor(offset=10)
-preprocessor.extractAll(
-    config.path.get('forms'),
-    config.path.get('xml'),
-)
+# preprocessor = ParagraphExtractor(offset=10)
+# preprocessor.extractAll(
+#     config.path.get('forms'),
+#     config.path.get('xml'),
+# )
+
+################ Step 3 of the pipeline" extract the paragraph   ################
+'''
+    paragraph preprocessing step
+'''

@@ -13,7 +13,7 @@ class ParagraphExtractor:
     related to the handwritten part only
     """
 
-    def __init__(self, path=config.path.get('preprocessed_data'), offset=10):
+    def __init__(self, path=config.path.get('paragraphs'), offset=10):
         """
         initialize the class
 
@@ -79,3 +79,12 @@ class ParagraphExtractor:
 
     def __addOffset(self, pixel, lower_bound=True):
         return pixel-self._offset  if lower_bound else pixel + self._offset
+
+
+
+class Preprocessing:
+    """
+    A class to apply some image processing processes to the handwritings
+    """
+    def __init__(self, path=):
+        pass
