@@ -3,7 +3,10 @@ import os
 ####################### Path constants #######################
 path = {
     'project_path' : os.path.dirname(__file__),
-    'raw_data'     : os.path.join(os.path.dirname(__file__), 'raw_data')
+    'raw_data'     : os.path.join(os.path.dirname(__file__), 'raw_data'),
+    'forms'        : os.path.join(os.path.dirname(__file__), 'raw_data' , 'forms'),
+    'xml'          : os.path.join(os.path.dirname(__file__), 'raw_data' , 'xml'),
+    'ascii'        : os.path.join(os.path.dirname(__file__), 'raw_data' , 'ascii'),
 }
 
 
