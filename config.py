@@ -1,13 +1,15 @@
+from logging import root
 import os
 
 ####################### Path constants #######################
+root = os.path.dirname(__file__)
 path = {
-    'project_path'      : os.path.dirname(__file__),
-    'raw_data'          : os.path.join(os.path.dirname(__file__), 'raw_data'),
-    'forms'             : os.path.join(os.path.dirname(__file__), 'raw_data' , 'forms'),
-    'xml'               : os.path.join(os.path.dirname(__file__), 'raw_data' , 'xml'),
-    'ascii'             : os.path.join(os.path.dirname(__file__), 'raw_data' , 'ascii'),
-    'preprocessed_data' : os.path.join(os.path.dirname(__file__), 'preprocessed_data')
+    'project_path'      : root,
+    'raw_data'          : os.path.join(root, 'raw_data'),
+    'forms'             : os.path.join(root, 'raw_data' , 'forms'),
+    'xml'               : os.path.join(root, 'raw_data' , 'xml'),
+    'ascii'             : os.path.join(root, 'raw_data' , 'ascii'),
+    'preprocessed_data' : os.path.join(root, 'preprocessed_data', 'paragraphs')
 }
 
 

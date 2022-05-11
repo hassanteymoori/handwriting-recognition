@@ -2,7 +2,7 @@ import os
 import config
 import modules.getdata as getdata
 from modules.preprocessing import ParagraphExtractor
-########################## Step 1 of the pipeline  #################################
+################ Step 1 of the pipeline: download the raw data  ################
 '''
     To get the data from the google drive. The data includes the information
     about authors, handwriting forms and an xml file per each form which
@@ -14,13 +14,13 @@ from modules.preprocessing import ParagraphExtractor
 # downloder.download(config.google_ids.get('forms') , 'forms.zip').extract()
 
 
-########################## Step 1 of the pipeline  #################################
+################ Step 2 of the pipeline" extract the paragraph   ################
 '''
     To extract the handwritten part from the form.
 '''
 
-preprocessor = ParagraphExtractor()
-preprocessor.extractParagraph(
-    os.path.join(config.path.get('forms'), 'a01-000u.png'),
-    os.path.join(config.path.get('xml'), 'a01-000u.xml'),
+preprocessor = ParagraphExtractor(offset=10)
+preprocessor.extractAll(
+    config.path.get('forms'),
+    config.path.get('xml'),
 )
