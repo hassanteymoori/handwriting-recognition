@@ -3,6 +3,8 @@ import config
 import modules.getdata as getdata
 from modules.preprocessing import ParagraphExtractor
 from modules.preprocessing import Preprocessing
+from modules.utilities import Utility   
+
 ################ Step 1 of the pipeline: download the raw data  ################
 
 # downloder = getdata.Downloader()
@@ -25,3 +27,11 @@ from modules.preprocessing import Preprocessing
 # preprocessor.apply_to_directory(
 #     config.path.get('paragraphs')
 # )
+
+
+
+
+utility = Utility()
+utility.apply_to_directory(
+    config.path.get('paraghraphs_edged')
+)

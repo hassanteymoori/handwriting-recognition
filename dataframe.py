@@ -24,5 +24,5 @@ df = pd.read_csv(
              'word_correctly_segmented'
     ])
 
-# print(len(df.groupby("writer_id").filter(lambda x: len(x) > 8)['writer_id'].unique())) # Number of the total writers
+print(len(df.groupby("writer_id").filter(lambda x: len(x) > 8)['writer_id'].unique())) # Number of the total writers
 
