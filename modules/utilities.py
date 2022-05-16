@@ -1,3 +1,4 @@
+from fileinput import filename
 import os
 import sys
 sys.path.append('')
@@ -65,7 +66,7 @@ class Utility:
 
     def random_distortion(self, image_path, no_of_images=9, gridwdth=4, gridht=4, mag=15):
         for foldername in os.listdir(image_path):
-            self.p = Augmentor.Pipeline(os.path.join(image_path, foldername))
+            p = Augmentor.Pipeline(os.path.join(image_path, foldername))
             self.p.random_distortion(probability=1, grid_width=gridwdth, grid_height=gridht, magnitude=mag)
             self.p.sample(no_of_images)
 
@@ -110,8 +111,8 @@ class Utility:
         ).random_distortion(image_path,20, 10, 10, 12
         ).random_distortion(image_path,20, 4, 4, 18)
 
-        for foldername in os.listdir(image_path):
-            sliding_window(5, foldername)
+        # for foldername in os.listdir(image_path):
+        #     sliding_window(5, foldername).save(filename)
         
         return
 

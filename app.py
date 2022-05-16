@@ -1,4 +1,6 @@
 import os
+
+import Augmentor
 import config
 import modules.getdata as getdata
 from modules.preprocessing import ParagraphExtractor
@@ -21,7 +23,7 @@ from modules.utilities import Utility
 #     config.path.get('xml'),
 # )
 
-################ Step 3 of the pipeline" extract the paragraph   ################
+############### Step 3 of the pipeline" extract the paragraph   ################
 
 # preprocessor = Preprocessing()
 # preprocessor.apply_to_directory(
@@ -29,9 +31,11 @@ from modules.utilities import Utility
 # )
 
 
+############### Step 4 of the pipeline" performing image augmentation   ################
+
+# utility = Utility()
+# utility.ordering_folders(config.path.get('paragraphs_edged'))
+
+# utility.apply_to_directory(config.path.get('paragraphs_edged'))
 
 
-utility = Utility()
-utility.apply_to_directory(
-    config.path.get('paraghraphs_edged')
-)
