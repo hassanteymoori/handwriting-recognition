@@ -31,9 +31,21 @@ from modules.preprocessing import Preprocessing
 
 ############### Step 4 of the pipeline: Annotations & top writers    ################
 
-annotations = dataprovider.Annotation()
+# annotations = dataprovider.Annotation()
 
-top_writers_df = annotations.load_into_df().filter_by_top_writers()
+# top_writers_df = annotations.load_into_df().filter_by_top_writers()
 
-dataset = dataprovider.Dataset()
-dataset.form_to_writer_directory(top_writers_df)
+# dataset = dataprovider.Dataset()
+# dataset.form_to_writer_directory(top_writers_df)
+
+############### Step 5 of the pipeline: Crop training samples    ################
+
+# dataset = dataprovider.Dataset(crop_height=500, crop_width=500)
+
+# annotations = dataprovider.Annotation()
+
+# top_writers_df = annotations.load_into_df().filter_by_top_writers()
+
+# dataset.form_to_writer_directory(top_writers_df).crop_train_set()
+
+############### Step 6 of the pipeline: Zip our dataset    ################

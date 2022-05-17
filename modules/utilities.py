@@ -18,7 +18,7 @@ class Utility:
     A class contains some utility functions to handle the images
     for creating folders, renaming, moving, zipping, downloading etc
     Image Augmentation is performed by using a python package called 'Augmentor'
-    
+
     '''
 
     def __init__(self, path=config.path.get('cropped_images')):
@@ -30,28 +30,18 @@ class Utility:
         if not os.path.exists(path):
             os.makedirs(path)
         self.path = path
-    
+
 
     def view_image(self,path):
         print("path=",path)
         img = cv2.imread(path)
         img_cvt=cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         plt.imshow(img_cvt)
-        plt.show() 
+        plt.show()
 
 
-    # To move each author and corresponding image into their own specific folder
-    def ordering_folders (self,image_path):
-        for image_name in os.listdir(image_path):
-            if image_name.endswith(".png"):
-                folder_path = os.path.join(image_path, image_name.split('.')[0])
-                if not os.path.exists(folder_path):
-                    os.mkdir(folder_path)
-                    shutil.move(os.path.join(image_path , image_name), folder_path)
 
-        return 
-    
-    
+
 
 
 
@@ -61,7 +51,7 @@ class Utility:
             self.p.rotate(probability=0.9, max_left_rotation=lr, max_right_rotation=rr)
             self.p.sample(no_of_images)
         return self
-    
+
 
 
     def random_distortion(self, image_path, no_of_images=9, gridwdth=4, gridht=4, mag=15):
@@ -71,7 +61,7 @@ class Utility:
             self.p.sample(no_of_images)
 
         return self
-    
+
 
     #RANDOM SILCES OF 224*224
     def get_random_crop(image, crop_height, crop_width):
@@ -81,8 +71,6 @@ class Utility:
         y = np.random.randint(0, max_y)
         crop = image[y: y + crop_height, x: x + crop_width]
         return crop
-    
-
 
     def sliding_window(no_of_crops, image_path, foldername, htsize=224,wdsize=224):
         cnt=1
@@ -91,7 +79,7 @@ class Utility:
             image = cv2.imread(image)
             for i in range(no_of_crops):
                 image_cropped = get_random_crop(image, htsize, wdsize)
-                
+
                 cv2.imwrite(
                     os.path.join(config.path.get('cropped_images'), f'{str(cnt)}.jpeg'), image_cropped
                 )
@@ -101,11 +89,11 @@ class Utility:
 
     def save(self, filename):
         cv2.imwrite(os.path.join(self.path, filename), self.image)
-        
-        return True
-        
 
-    
+        return True
+
+
+
     def apply_to_directory(self, image_path):
         self.rotate(image_path,20,14,12).rotate(image_path,20,8,10
         ).random_distortion(image_path,20, 10, 10, 12
@@ -113,8 +101,5 @@ class Utility:
 
         # for foldername in os.listdir(image_path):
         #     sliding_window(5, foldername).save(filename)
-        
+
         return
-
-
-

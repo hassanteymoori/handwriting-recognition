@@ -5,6 +5,7 @@ import config
 import pandas as pd
 import shutil
 from tqdm import tqdm
+import cv2
 
 
 class Downloader:
@@ -119,7 +120,10 @@ class Dataset:
         self,
         train_set = config.path.get('train_set'),
         test_set = config.path.get('test_set'),
-        number_of_test_sample = 4
+        number_of_test_sample = 4,
+        crop_height = 224,
+        crop_width = 224,
+        padding_threshold = 50
     ):
         if not os.path.exists(train_set):
             os.makedirs(train_set)
@@ -128,6 +132,9 @@ class Dataset:
         self.train_set = train_set
         self.test_set = test_set
         self.number_of_test_sample = number_of_test_sample
+        self.crop_width = crop_width
+        self.crop_height = crop_height
+        self.padding_threshold = padding_threshold
 
     def form_to_writer_directory(self, dataframe ):
         for _, row in tqdm(dataframe.iterrows()):
@@ -147,3 +154,36 @@ class Dataset:
                 destination_path = os.path.join(self.train_set, train_folder_writer)
 
             shutil.copy(form_path, destination_path)
+
+        return self
+
+    #RANDOM SILCES OF 224*224
+    def crop_train_set(self):
+        for folder in tqdm(os.listdir(self.train_set)):
+            for image in os.listdir(os.path.join(self.train_set, folder)):
+                img = cv2.imread(os.path.join(self.train_set, folder, image))
+                filename = image.split('.')[0]
+                self._crop_image(img, folder ,filename)
+
+    def crop_test_set(self):
+        for folder in tqdm(os.listdir(self.test_set)):
+            for image in os.listdir(os.path.join(self.test_set, folder)):
+                img = cv2.imread(os.path.join(self.test_set, folder, image))
+                filename = image.split('.')[0]
+                self._crop_image(img, folder ,filename, apply_threshold=True)
+
+    def _crop_image(self, image, folder ,filename, apply_threshold=False):
+        count = 0
+        for row in range(0, image.shape[1], self.crop_width):
+            step_row = row + self.crop_width
+            if (step_row) > image.shape[1]:
+                row = row - ((step_row) - image.shape[1])
+            for column in range(0, image.shape[0], self.crop_height):
+                step_column = column + self.crop_height
+                if (step_column) > image.shape[0]:
+                    column = column - ((step_column) - image.shape[0])
+                cv2.imwrite(
+                    os.path.join(self.train_set, folder ,f'{filename}-{str(count)}.png'),
+                    image[column: step_column, row: step_row]
+                )
+                count +=1
