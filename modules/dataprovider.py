@@ -4,7 +4,6 @@ import zipfile
 import config
 import pandas as pd
 
-
 class Downloader:
     """ A class used to retrieve the raw data from google drive """
 
@@ -70,3 +69,57 @@ class Annotation:
         self.df = None
 
     def load_into_df(self):
+        self.df = pd.read_csv(
+            filepath_or_buffer=self.path,
+            comment="#",
+            sep=' ',
+            index_col=False,
+            header=0,
+            names=[
+                    'form_id',
+                    'writer_id',
+                    'number_of_sentences',
+                    'word_segmentation',
+                    'lines',
+                    'line_correctly_segmented',
+                    'words',
+                    'word_correctly_segmented'
+            ])
+
+        return self
+
+
+    def get_df(self):
+        self._is_loaded()
+
+        return self.df
+
+    def filter_by_top_writers(self, number_of_forms=8):
+        self._is_loaded()
+        return self.df.groupby("writer_id").filter(lambda x: len(x) > number_of_forms)
+
+    def number_of_top_writers(self):
+        return len(self.filter_by_top_writers(8)['writer_id'].unique())
+
+    def number_of_top_writers_forms(self):
+        return len(self.filter_by_top_writers())
+
+    def _is_loaded(self):
+        if self.df is None:
+            raise Exception('dataframe has not been loaded! first call the `load_into_df` method')
+        return self
+
+class Dataset:
+    def __init__(
+        self,
+        train_set = config.path.get('train_set'),
+        test_set = config.path.get('test_set')
+    ):
+        if not os.path.exists(train_set):
+            os.makedirs(train_set)
+        if not os.path.exists(test_set):
+            os.makedirs(test_set)
+        self.train_set = train_set
+        self.test_set = test_set
+
+    def form_to_writer_directory(self, )

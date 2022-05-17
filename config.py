@@ -11,8 +11,10 @@ path = {
     'ascii'             : os.path.join(root, 'raw_data' , 'ascii'),
     'paragraphs'        : os.path.join(root, 'preprocessed_data', 'paragraphs'),
     'paragraphs_edged'  : os.path.join(root, 'preprocessed_data', 'paragraphs_edged'),
-    'cropped_images'    : os.path.join(root, 'preprocessed_data', 'cropped_images' )
- 
+    'cropped_images'    : os.path.join(root, 'preprocessed_data', 'cropped_images' ),
+    'dataset'           : os.path.join(root, 'dataset'),
+    'train_set'         : os.path.join(root, 'dataset', 'train_set'),
+    'test_set'         : os.path.join(root, 'dataset', 'test_set'),
 }
 
 

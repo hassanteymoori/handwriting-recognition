@@ -32,3 +32,5 @@ from modules.preprocessing import Preprocessing
 ############### Step 4 of the pipeline: Annotations & top writers    ################
 
 annotations = dataprovider.Annotation()
+
+print(annotations.load_into_df().number_of_top_writers())
