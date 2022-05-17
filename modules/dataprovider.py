@@ -194,3 +194,6 @@ class Dataset:
                     dest_path = os.path.join(self.train_set, folder ,f'{filename}-{str(count)}.png')
                 cv2.imwrite(dest_path,image[column: step_column, row: step_row])
                 count +=1
+
+    def make_zip(self):
+        pass
