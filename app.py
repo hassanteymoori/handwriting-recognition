@@ -1,21 +1,19 @@
 import os
 
-import Augmentor
 import config
-import modules.getdata as getdata
+import modules.dataprovider as dataprovider
 from modules.preprocessing import ParagraphExtractor
 from modules.preprocessing import Preprocessing
-from modules.utilities import Utility   
 
 ################ Step 1 of the pipeline: download the raw data  ################
 
-# downloder = getdata.Downloader()
+# downloder = dataprovider.Downloader()
 # downloder.download(config.google_ids.get('ascii') , 'ascii.zip').extract()
 # downloder.download(config.google_ids.get('xml') , 'xml.zip').extract()
 # downloder.download(config.google_ids.get('forms') , 'forms.zip').extract()
 
 
-################ Step 2 of the pipeline" extract the paragraph   ################
+################ Step 2 of the pipeline: extract the paragraph   ################
 
 # paragraph = ParagraphExtractor(offset=10)
 # paragraph.extractAll(
@@ -23,7 +21,7 @@ from modules.utilities import Utility
 #     config.path.get('xml'),
 # )
 
-############### Step 3 of the pipeline" extract the paragraph   ################
+############### Step 3 of the pipeline: extract the paragraph   ################
 
 # preprocessor = Preprocessing()
 # preprocessor.apply_to_directory(
@@ -31,11 +29,6 @@ from modules.utilities import Utility
 # )
 
 
-############### Step 4 of the pipeline" performing image augmentation   ################
+############### Step 4 of the pipeline: Annotations & top writers    ################
 
-# utility = Utility()
-# utility.ordering_folders(config.path.get('paragraphs_edged'))
-
-# utility.apply_to_directory(config.path.get('paragraphs_edged'))
-
-
+annotations = dataprovider.Annotation()

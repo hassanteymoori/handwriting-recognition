@@ -2,6 +2,7 @@ import os
 import gdown
 import zipfile
 import config
+import pandas as pd
 
 
 class Downloader:
@@ -54,3 +55,18 @@ class Downloader:
         junk = os.path.join(self.path, '__MACOSX', self.file_name.split('.')[0])
         if os.path.exists(junk):
             os.removedirs(junk)
+
+class Annotation:
+
+    def __init__(self, path=os.path.join(config.path.get('ascii'), 'forms.txt')):
+        """
+        initialize the class
+
+        :param path: the location of the annotation file
+        """
+        if not os.path.exists(path):
+            raise Exception('The annotation file is not exists, neet to be downloaded first!')
+        self.path = path
+        self.df = None
+
+    def load_into_df(self):

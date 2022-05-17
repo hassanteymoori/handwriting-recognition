@@ -1,5 +1,4 @@
 gdown
 OpenCV-Python
 tqdm
-augmentor
-matplotlib
+pandas
