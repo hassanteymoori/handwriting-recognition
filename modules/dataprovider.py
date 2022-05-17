@@ -177,13 +177,20 @@ class Dataset:
         for row in range(0, image.shape[1], self.crop_width):
             step_row = row + self.crop_width
             if (step_row) > image.shape[1]:
+                if apply_threshold:
+                    if (step_row - image.shape[1]) > self.padding_threshold:
+                        break
                 row = row - ((step_row) - image.shape[1])
             for column in range(0, image.shape[0], self.crop_height):
                 step_column = column + self.crop_height
                 if (step_column) > image.shape[0]:
+                    if apply_threshold:
+                        if (step_column - image.shape[0]) > self.padding_threshold:
+                            break
                     column = column - ((step_column) - image.shape[0])
-                cv2.imwrite(
-                    os.path.join(self.train_set, folder ,f'{filename}-{str(count)}.png'),
-                    image[column: step_column, row: step_row]
-                )
+                if apply_threshold:
+                    dest_path = os.path.join(self.test_set, folder ,f'{filename}-{str(count)}.png')
+                else:
+                    dest_path = os.path.join(self.train_set, folder ,f'{filename}-{str(count)}.png')
+                cv2.imwrite(dest_path,image[column: step_column, row: step_row])
                 count +=1
