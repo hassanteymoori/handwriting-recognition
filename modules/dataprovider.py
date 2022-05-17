@@ -3,6 +3,7 @@ import gdown
 import zipfile
 import config
 import pandas as pd
+import shutil
 
 class Downloader:
     """ A class used to retrieve the raw data from google drive """
@@ -109,6 +110,8 @@ class Annotation:
             raise Exception('dataframe has not been loaded! first call the `load_into_df` method')
         return self
 
+
+
 class Dataset:
     def __init__(
         self,
@@ -122,4 +125,24 @@ class Dataset:
         self.train_set = train_set
         self.test_set = test_set
 
-    def form_to_writer_directory(self, )
+    def form_to_writer_directory(self, dataframe ):
+        for _, row in dataframe.iterrows():
+            writer_folder = os.path.join(self.train_set, row['writer_id'])
+            if not os.path.exists(writer_folder):
+                os.mkdir(writer_folder)
+            form_path = os.path.join(config.path.get('paragraphs_edged'), f"{row['form_id']}.png")
+            destination_path = os.path.join(self.train_set, writer_folder, )
+            shutil.copy(form_path, destination_path)
+
+
+# for _, row in seen_df.iterrows():
+#     data_path=os.path.join(DATASET_PATH, row['form_id'] + '.png')
+#     print(data_path)
+#     f2=preprocess1(data_path, forms_wanted)
+
+# for imagename in os.listdir('/content/gdrive/MyDrive/biometric_project/dataset/probe_set_g'):
+#     base_p = '/content/gdrive/MyDrive/biometric_project/dataset/probe_set_g'
+#     form_id = imagename.split('.')[0]
+#     writer_id = df.loc[df['form_id'] == form_id].iloc[0]['writer_id']
+#     os.mkdir(os.path.join(base_p, str(writer_id)))
+#     shutil.move(os.path.join(base_p, imagename), os.path.join(base_p, str(writer_id) ,imagename))

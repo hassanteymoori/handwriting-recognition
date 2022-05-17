@@ -33,4 +33,7 @@ from modules.preprocessing import Preprocessing
 
 annotations = dataprovider.Annotation()
 
-print(annotations.load_into_df().number_of_top_writers())
+top_writers_df = annotations.load_into_df().filter_by_top_writers()
+
+dataset = dataprovider.Dataset()
+dataset.form_to_writer_directory(top_writers_df)

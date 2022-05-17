@@ -5,3 +5,5 @@
 /.idea
 /modules/__pycache__
 /preprocessed_data
+/dataset
+/dataset/*

@@ -2,3 +2,4 @@ gdown
 OpenCV-Python
 tqdm
 pandas
+pytest-shutil
