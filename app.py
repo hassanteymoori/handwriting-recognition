@@ -42,13 +42,6 @@ from modules.preprocessing import Preprocessing
 
 # dataset = dataprovider.Dataset(crop_height=500, crop_width=500)
 
-# dataset.form_to_writer_directory(top_writers_df).crop_train_set()
-# dataset.crop_test_set()
+# dataset.crop_train_set().crop_test_set().make_zipfolder()
 
-############### Step 6 of the pipeline: Zip our dataset    ################
-
-zipfolder = dataprovider.Dataset()
-zipfolder.make_zipfolder()
-
-
-############### Step 7 of the pipeline: customizing AlexNet CNN architecture model    ################
+############### Step 6 of the pipeline: Training    ################

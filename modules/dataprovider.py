@@ -7,7 +7,6 @@ import pandas as pd
 import shutil
 from tqdm import tqdm
 import cv2
-import files
 
 
 class Downloader:
@@ -59,6 +58,7 @@ class Downloader:
             os.removedirs(junk)
 
 class Annotation:
+    """ A class used to retrieve and manipulate the annotation information  """
 
     def __init__(self, path=os.path.join(config.path.get('ascii'), 'forms.txt')):
         """
@@ -71,6 +71,9 @@ class Annotation:
         self.df = None
 
     def load_into_df(self):
+        """
+        Load the annotation txt file into the pandas dataframe
+        """
         self.df = pd.read_csv(
             filepath_or_buffer=self.path,
             comment="#",
@@ -92,26 +95,40 @@ class Annotation:
 
 
     def get_df(self):
+        """
+        getter for the dataframe object
+        """
         self._is_loaded()
 
         return self.df
 
     def filter_by_top_writers(self, number_of_forms=8):
+        """
+        returns the dataframe which has been filtered by the top writers who have been participated more than others
+        :param number_of_forms: number of the forms in which we want to filter by as lower limit
+        """
         self._is_loaded()
         return self.df.groupby("writer_id").filter(lambda x: len(x) > number_of_forms)
 
     def number_of_top_writers(self):
+        """
+        returns the number of the top writer based on the participation limit
+        """
         return len(self.filter_by_top_writers(8)['writer_id'].unique())
 
     def number_of_top_writers_forms(self):
+        """
+        total number of the forms written by  the top writer
+        """
         return len(self.filter_by_top_writers())
 
     def _is_loaded(self):
+        """
+        Private method, check to see whether the dataframe has been loaded successfully
+        """
         if self.df is None:
             raise Exception('dataframe has not been loaded! first call the `load_into_df` method')
         return self
-
-
 
 class Dataset:
     def __init__(
@@ -161,16 +178,24 @@ class Dataset:
     def crop_train_set(self):
         for folder in tqdm(os.listdir(self.train_set)):
             for image in os.listdir(os.path.join(self.train_set, folder)):
-                img = cv2.imread(os.path.join(self.train_set, folder, image))
+                image_path = os.path.join(self.train_set, folder, image)
+                img = cv2.imread(image_path)
                 filename = image.split('.')[0]
                 self._crop_image(img, folder ,filename)
+                os.remove(image_path)
+        return self
+
 
     def crop_test_set(self):
         for folder in tqdm(os.listdir(self.test_set)):
             for image in os.listdir(os.path.join(self.test_set, folder)):
-                img = cv2.imread(os.path.join(self.test_set, folder, image))
+                image_path = os.path.join(self.test_set, folder, image)
+                img = cv2.imread(image_path)
                 filename = image.split('.')[0]
                 self._crop_image(img, folder ,filename, apply_threshold=True)
+                os.remove(image_path)
+
+        return self
 
     def _crop_image(self, image, folder ,filename, apply_threshold=False):
         count = 0
@@ -195,5 +220,6 @@ class Dataset:
                 cv2.imwrite(dest_path,image[column: step_column, row: step_row])
                 count +=1
 
-    def make_zipfolder(self,zipfoldername='Dataset'):
+    def make_zipfolder(self, zipfoldername='dataset'):
         shutil.make_archive(zipfoldername, 'zip', self.dataset)
+        return self
