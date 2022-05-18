@@ -31,24 +31,33 @@ from modules.preprocessing import Preprocessing
 
 ############### Step 4 of the pipeline: Annotations & top writers    ################
 
-annotations = dataprovider.Annotation()
+# annotations = dataprovider.Annotation()
 
-top_writers_df = annotations.load_into_df().filter_by_top_writers()
+# top_writers_df = annotations.load_into_df().filter_by_top_writers()
 
 # dataset = dataprovider.Dataset()
 # dataset.form_to_writer_directory(top_writers_df)
 
 ############### Step 5 of the pipeline: Crop training samples and test sampe   ################
 
-dataset = dataprovider.Dataset(crop_height=500, crop_width=500)
+# dataset = dataprovider.Dataset(crop_height=500, crop_width=500)
 
-dataset.form_to_writer_directory(top_writers_df).crop_train_set()
-dataset.crop_test_set()
+# dataset.form_to_writer_directory(top_writers_df).crop_train_set()
+# dataset.crop_test_set()
 
 ############### Step 6 of the pipeline: Zip our dataset    ################
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ff4f06a3bb0ef68d141b09b49c1949481f5c5a32
 # zipfolder = dataprovider.Dataset()
 # zipfolder.make_zipfolder()
 
 
+<<<<<<< HEAD
 ############### Step 7 of the pipeline: customizing AlexNet CNN architecture model    ################
+=======
+############### Step 7 of the pipeline: customizing AlexNet CNN architecture model    ################
+
+>>>>>>> ff4f06a3bb0ef68d141b09b49c1949481f5c5a32

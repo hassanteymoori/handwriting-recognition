@@ -197,3 +197,8 @@ class Dataset:
 
     def make_zipfolder(self,zipfoldername='Dataset'):
         shutil.make_archive(zipfoldername, 'zip', self.dataset)
+<<<<<<< HEAD
+=======
+        # files.download(zipfoldername+".zip")
+       
+>>>>>>> ff4f06a3bb0ef68d141b09b49c1949481f5c5a32
