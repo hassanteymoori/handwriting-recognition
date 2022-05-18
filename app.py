@@ -47,17 +47,8 @@ from modules.preprocessing import Preprocessing
 
 ############### Step 6 of the pipeline: Zip our dataset    ################
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ff4f06a3bb0ef68d141b09b49c1949481f5c5a32
 # zipfolder = dataprovider.Dataset()
 # zipfolder.make_zipfolder()
 
 
-<<<<<<< HEAD
 ############### Step 7 of the pipeline: customizing AlexNet CNN architecture model    ################
-=======
-############### Step 7 of the pipeline: customizing AlexNet CNN architecture model    ################
-
->>>>>>> ff4f06a3bb0ef68d141b09b49c1949481f5c5a32
