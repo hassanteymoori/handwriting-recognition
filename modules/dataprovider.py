@@ -131,6 +131,9 @@ class Annotation:
         return self
 
 class Dataset:
+    """
+        database provider based on the given paragraphs and dataframe
+    """
     def __init__(
         self,
         dataset = config.path.get('dataset'),
@@ -141,6 +144,16 @@ class Dataset:
         crop_width = 224,
         padding_threshold = 50
     ):
+        """
+            Initialize the class object
+            :param dataset : the location for the dataset
+            :param train_set : the location for the train_set
+            :param test_set : the location for the test_set
+            :param number_of_test_sample: the number of the test sample for to be splitted
+            :param crop_width width of the new image after crop functionality
+            :param crop_height height of the new image after crop functionality
+            :param padding_threshold a threshold in which we ignore to split an image during test
+        """
         if not os.path.exists(train_set):
             os.makedirs(train_set)
         if not os.path.exists(test_set):
@@ -154,6 +167,10 @@ class Dataset:
         self.padding_threshold = padding_threshold
 
     def form_to_writer_directory(self, dataframe ):
+        """
+            move each form to the corresponding writer directory in the given test and train path
+            :param dataframe : the annotation information dataframe
+        """
         for _, row in tqdm(dataframe.iterrows()):
             train_folder_writer = os.path.join(self.train_set, str(row['writer_id']))
             test_folder_writer = os.path.join(self.test_set, str(row['writer_id']))
@@ -174,8 +191,11 @@ class Dataset:
 
         return self
 
-    #RANDOM SILCES OF 224*224
+    #RANDOM SILCES OF crop_width*crop_height
     def crop_train_set(self):
+        """
+            crop each sample of the training set to smaller samples of the given crop_width and crop_height
+        """
         for folder in tqdm(os.listdir(self.train_set)):
             for image in os.listdir(os.path.join(self.train_set, folder)):
                 image_path = os.path.join(self.train_set, folder, image)
@@ -187,6 +207,9 @@ class Dataset:
 
 
     def crop_test_set(self):
+        """
+            crop each sample of the test set to smaller samples of the given crop_width and crop_height
+        """
         for folder in tqdm(os.listdir(self.test_set)):
             for image in os.listdir(os.path.join(self.test_set, folder)):
                 image_path = os.path.join(self.test_set, folder, image)
@@ -198,6 +221,14 @@ class Dataset:
         return self
 
     def _crop_image(self, image, folder ,filename, apply_threshold=False):
+        """
+            @private method
+            crop the given image based on crop_width and crop_height and save in the folder
+            :param image a numpy array of the loaded image
+            :param folder a writer folder name
+            :param name of file
+            :apply_threshold a threshold in which we decide to continue spliting
+        """
         count = 0
         for row in range(0, image.shape[1], self.crop_width):
             step_row = row + self.crop_width
@@ -221,5 +252,8 @@ class Dataset:
                 count +=1
 
     def make_zipfolder(self, zipfoldername='dataset'):
+        """
+            create a zip folder from the dataset for training
+        """
         shutil.make_archive(zipfoldername, 'zip', self.dataset)
         return self
