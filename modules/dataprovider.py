@@ -6,6 +6,7 @@ import pandas as pd
 import shutil
 from tqdm import tqdm
 import cv2
+import files
 
 
 class Downloader:
@@ -118,6 +119,7 @@ class Annotation:
 class Dataset:
     def __init__(
         self,
+        dataset = config.path.get('dataset'),
         train_set = config.path.get('train_set'),
         test_set = config.path.get('test_set'),
         number_of_test_sample = 4,
@@ -131,6 +133,7 @@ class Dataset:
             os.makedirs(test_set)
         self.train_set = train_set
         self.test_set = test_set
+        self.dataset = dataset
         self.number_of_test_sample = number_of_test_sample
         self.crop_width = crop_width
         self.crop_height = crop_height
@@ -195,5 +198,7 @@ class Dataset:
                 cv2.imwrite(dest_path,image[column: step_column, row: step_row])
                 count +=1
 
-    def make_zip(self):
-        pass
+    def make_zipfolder(self,zipfoldername='Dataset'):
+        shutil.make_archive(zipfoldername, 'zip', self.dataset)
+        # files.download(zipfoldername+".zip")
+       
