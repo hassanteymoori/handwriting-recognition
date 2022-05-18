@@ -46,3 +46,9 @@ dataset.form_to_writer_directory(top_writers_df).crop_train_set()
 dataset.crop_test_set()
 
 ############### Step 6 of the pipeline: Zip our dataset    ################
+
+# zipfolder = dataprovider.Dataset()
+# zipfolder.make_zipfolder()
+
+
+############### Step 7 of the pipeline: customizing AlexNet CNN architecture model    ################

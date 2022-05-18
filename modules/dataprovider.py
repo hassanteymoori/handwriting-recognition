@@ -1,3 +1,4 @@
+
 import os
 import gdown
 import zipfile
@@ -6,6 +7,7 @@ import pandas as pd
 import shutil
 from tqdm import tqdm
 import cv2
+import files
 
 
 class Downloader:
@@ -14,7 +16,6 @@ class Downloader:
     def __init__(self, path=config.path.get('raw_data')):
         """
         initialize the class
-
         :param path: the location in which the downloded file will be stored
         :param file_name: the name of downloded file, e.g: test.zip
         """
@@ -26,7 +27,6 @@ class Downloader:
     def download(self, google_id, file_name):
         """
         an interface over gdown library
-
         :param google_id: g_id reference
         :param file_name: name of the file to be saved
         :return: self -> chaining
@@ -39,7 +39,6 @@ class Downloader:
     def extract(self, auto_delete=True):
         """
         extract the downloded file into the self.path
-
         :param auto_delete: set false if you want to keep the file
         :return: __clean the directory from any other stuff
         """
@@ -64,7 +63,6 @@ class Annotation:
     def __init__(self, path=os.path.join(config.path.get('ascii'), 'forms.txt')):
         """
         initialize the class
-
         :param path: the location of the annotation file
         """
         if not os.path.exists(path):
@@ -118,6 +116,7 @@ class Annotation:
 class Dataset:
     def __init__(
         self,
+        dataset = config.path.get('dataset'),
         train_set = config.path.get('train_set'),
         test_set = config.path.get('test_set'),
         number_of_test_sample = 4,
@@ -131,6 +130,7 @@ class Dataset:
             os.makedirs(test_set)
         self.train_set = train_set
         self.test_set = test_set
+        self.dataset = dataset
         self.number_of_test_sample = number_of_test_sample
         self.crop_width = crop_width
         self.crop_height = crop_height
@@ -195,5 +195,5 @@ class Dataset:
                 cv2.imwrite(dest_path,image[column: step_column, row: step_row])
                 count +=1
 
-    def make_zip(self):
-        pass
+    def make_zipfolder(self,zipfoldername='Dataset'):
+        shutil.make_archive(zipfoldername, 'zip', self.dataset)
