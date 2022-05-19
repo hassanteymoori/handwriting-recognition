@@ -140,7 +140,7 @@ class Dataset:
         train_set = config.path.get('train_set'),
         test_set = config.path.get('test_set'),
         number_of_test_sample = 4,
-        number_of_train_sample = 4,
+        number_of_train_sample = 5,
         split_train_set = 8,
         split_test_set = 4,
         crop_height = 224,
