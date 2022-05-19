@@ -140,6 +140,9 @@ class Dataset:
         train_set = config.path.get('train_set'),
         test_set = config.path.get('test_set'),
         number_of_test_sample = 4,
+        number_of_train_sample = 4,
+        split_train_set = 8,
+        split_test_set = 4,
         crop_height = 224,
         crop_width = 224,
         padding_threshold = 50
@@ -162,9 +165,12 @@ class Dataset:
         self.test_set = test_set
         self.dataset = dataset
         self.number_of_test_sample = number_of_test_sample
+        self.number_of_train_sample = number_of_train_sample
         self.crop_width = crop_width
         self.crop_height = crop_height
         self.padding_threshold = padding_threshold
+        self.split_train_set = split_train_set
+        self.split_test_set = split_test_set
 
     def form_to_writer_directory(self, dataframe ):
         """
@@ -181,13 +187,13 @@ class Dataset:
 
             form_path = os.path.join(config.path.get('paragraphs_edged'), f"{row['form_id']}.png")
 
-            count = len(os.listdir(test_folder_writer))
-            if count < self.number_of_test_sample:
-                destination_path = os.path.join(self.test_set, test_folder_writer)
-            else:
-                destination_path = os.path.join(self.train_set, train_folder_writer)
+            upper_test_bound = len(os.listdir(test_folder_writer))
+            upper_train_bound = len(os.listdir(train_folder_writer))
+            if upper_test_bound < self.number_of_test_sample:
+                shutil.copy(form_path, os.path.join(self.test_set, test_folder_writer))
+            elif upper_train_bound < self.number_of_train_sample:
+                shutil.copy(form_path, os.path.join(self.train_set, train_folder_writer))
 
-            shutil.copy(form_path, destination_path)
 
         return self
 
@@ -215,12 +221,12 @@ class Dataset:
                 image_path = os.path.join(self.test_set, folder, image)
                 img = cv2.imread(image_path)
                 filename = image.split('.')[0]
-                self._crop_image(img, folder ,filename, apply_threshold=True)
+                self._crop_image(img, folder ,filename, train_set=False, apply_threshold=True)
                 os.remove(image_path)
 
         return self
 
-    def _crop_image(self, image, folder ,filename, apply_threshold=False):
+    def _crop_image(self, image, folder ,filename, train_set=True, apply_threshold=False):
         """
             @private method
             crop the given image based on crop_width and crop_height and save in the folder
@@ -238,6 +244,9 @@ class Dataset:
                         break
                 row = row - ((step_row) - image.shape[1])
             for column in range(0, image.shape[0], self.crop_height):
+                split_number = self.split_train_set if train_set else self.split_test_set
+                if count == split_number:
+                    break
                 step_column = column + self.crop_height
                 if (step_column) > image.shape[0]:
                     if apply_threshold:
