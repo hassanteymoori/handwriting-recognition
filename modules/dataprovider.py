@@ -142,7 +142,7 @@ class Dataset:
         number_of_test_sample = 4,
         number_of_train_sample = 5,
         split_train_set = 8,
-        split_test_set = 4,
+        split_test_set = 3,
         crop_height = 224,
         crop_width = 224,
         padding_threshold = 50
