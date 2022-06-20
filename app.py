@@ -21,7 +21,7 @@ from modules.preprocessing import Preprocessing
 #     config.path.get('xml'),
 # )
 
-############### Step 3 of the pipeline: extract the paragraph   ################
+############### Step 3 of the pipeline: preprocessing  ################
 
 # preprocessor = Preprocessing()
 # preprocessor.apply_to_directory(
